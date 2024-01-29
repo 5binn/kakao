@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+    include: secret
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            scope:
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: 'http://localhost:8080/login/oauth2/code/kakao'
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100 # Lazy ??? ? ? ??? DB?? ???? ???? ?
+        show_sql: true # SQL ??? ?? ?? ???
+        format_sql: true # SQL ??? ?????
+        use_sql_comments: true # SQL ??? ???
+  logging:
+    level:
+      # SQL? ??? ?? ????, SQL? ??? ??
+      org.hibernate.SQL: DEBUG
+      org.hibernate.orm.jdbc.bind: TRACE
+      org.hibernate.orm.jdbc.extract: TRACE
+      org.springframework.transaction.interceptor: TRACE

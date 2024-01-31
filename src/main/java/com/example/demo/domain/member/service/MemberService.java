@@ -20,6 +20,7 @@ public class MemberService {
                 .username(username)
                 .nickname(nickname)
                 .password(passwordEncoder.encode(password))
+                .email(email)
                 .build();
         return this.memberRepository.save(member);
     }

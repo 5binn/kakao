@@ -1,5 +1,6 @@
 package com.example.demo.domain.member.controller;
 
+import com.example.demo.domain.email.service.EmailService;
 import com.example.demo.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
+    private final EmailService emailService;
 
     @GetMapping("/login")
     public String login() {
@@ -21,13 +23,17 @@ public class MemberController {
 
     @GetMapping("/join")
     public String join() {
-        return "member/login";
+        return "member/join";
     }
 
     @PostMapping("/join")
     public String join(@RequestParam("username") String username, @RequestParam("nickname") String nickname,
                        @RequestParam("password") String password, @RequestParam("email") String email) {
         this.memberService.join(username, nickname, password, email);
+
+        emailService.send(email,"가입을 환영합니다.","환영합니다.");
         return "redirect:/";
     }
+
+
 }
